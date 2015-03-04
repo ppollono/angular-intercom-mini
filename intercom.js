@@ -60,9 +60,6 @@
 
   module.provider('Intercom', function() {
 
-    var appID = null;
-    this.init = function(_appID) { appID = _appID };
-
     this.$get = ['IntercomService', 'IntercomSettings', function(IntercomService, IntercomSettings) {
       var _options = {};
       var intercomObj = false;
@@ -78,9 +75,8 @@
 
       return {
         boot: function(options) {
-          IntercomService.init(appID).then(function(intercom) {
+          IntercomService.init(options.app_id).then(function(intercom) {
             options = options || _options;
-            angular.extend(options, { app_id: appID });
 
             intercom('boot', options);
             intercomObj = intercom;
